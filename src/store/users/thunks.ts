@@ -1,6 +1,7 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit'
 
 import { randomuser } from '../../utils'
+import { IUserEditFields } from './types'
 
 export const generate = createAsyncThunk(
   'users.generate',
@@ -10,6 +11,9 @@ export const generate = createAsyncThunk(
   }
 )
 
+/**
+ * Добавить пользователя.
+ */
 export const addUser = createAsyncThunk(
   'users.addUser',
   async () => {
@@ -17,3 +21,18 @@ export const addUser = createAsyncThunk(
     return user[0]
   }
 )
+
+/**
+ * Удалить пользователя.
+ * 
+ * @param id Идентификатор пользователя.
+ */
+export const deleteUser = createAction('users.deleteUser', (id: string) => ({payload: id}))
+
+/**
+ * Редактировать пользователя.
+ * 
+ * @param id Идентификатор пользователя.
+ * @param values Измененные данные.
+ */
+export const editUser = createAction('users.editUser', (id: string, values: IUserEditFields) => ({payload: {id, values}}))
